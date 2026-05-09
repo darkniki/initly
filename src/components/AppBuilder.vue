@@ -149,9 +149,7 @@ const handleKeydown = (event: KeyboardEvent) => {
   if (event.key === '/') {
     event.preventDefault();
     searchInput.value?.focus();
-    return;
   }
-
 };
 
 onMounted(() => {
@@ -165,7 +163,9 @@ onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
     <header class="border-b border-[var(--border)] bg-[var(--header-bg)] backdrop-blur">
       <div class="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <a href="/" class="flex items-center gap-3 font-mono text-2xl font-bold text-terminal-green sm:text-3xl">
-          <span class="text-terminal-green">&gt;_</span>
+          <span class="text-terminal-green" aria-hidden="true">
+            &gt;<span class="terminal-cursor">_</span>
+          </span>
           <span>initly.app</span>
           <span class="hidden rounded border border-terminal-green/25 px-2 py-1 text-xs font-medium text-terminal-green/80 sm:inline">v{{ props.appVersion }}</span>
         </a>

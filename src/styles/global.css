@@ -3,23 +3,6 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  background: #050809;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  min-width: 320px;
-  margin: 0;
-  color: #e7fff0;
-  background: #050809;
-}
-
-.initly-shell {
   --accent-blue: #22d3ee;
   --accent-green: #48ff6a;
   --bg-page: #050809;
@@ -37,6 +20,23 @@ body {
   --text-muted: #8b9b9e;
   --shadow-green: 0 0 35px rgba(72, 255, 106, 0.18);
   --shadow-blue: 0 0 28px rgba(34, 211, 238, 0.16);
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  background: var(--bg-page);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  color: var(--text-ink);
+  background: var(--bg-page);
+}
+
+.initly-shell {
   position: relative;
   isolation: isolate;
   color: var(--text-ink);
@@ -59,12 +59,34 @@ body {
   mask-image: linear-gradient(to bottom, black, transparent 85%);
 }
 
+.terminal-cursor {
+  animation: cursor-blink 1.15s steps(2, start) infinite;
+}
+
+@keyframes cursor-blink {
+  0%,
+  45% {
+    opacity: 1;
+  }
+
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-cursor {
+    animation: none;
+  }
+}
+
 button,
 input {
   font: inherit;
 }
 
 ::selection {
-  color: #050809;
-  background: #48ff6a;
+  color: var(--bg-page);
+  background: var(--accent-green);
 }
