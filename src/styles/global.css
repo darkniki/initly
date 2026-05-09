@@ -16,21 +16,45 @@ body {
   min-width: 320px;
   margin: 0;
   color: #e7fff0;
+  background: #050809;
+}
+
+.initly-shell {
+  --accent-blue: #22d3ee;
+  --accent-green: #48ff6a;
+  --bg-page: #050809;
+  --bg-page-2: #071013;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(72, 255, 106, 0.62);
+  --header-bg: rgba(0, 0, 0, 0.3);
+  --panel: rgba(0, 0, 0, 0.35);
+  --panel-soft: rgba(255, 255, 255, 0.025);
+  --panel-hover: rgba(34, 211, 238, 0.055);
+  --selected: rgba(72, 255, 106, 0.075);
+  --terminal-bg: #030607;
+  --text: #ffffff;
+  --text-ink: #e7fff0;
+  --text-muted: #8b9b9e;
+  --shadow-green: 0 0 35px rgba(72, 255, 106, 0.18);
+  --shadow-blue: 0 0 28px rgba(34, 211, 238, 0.16);
+  position: relative;
+  isolation: isolate;
+  color: var(--text-ink);
   background:
     radial-gradient(circle at 18% 18%, rgba(72, 255, 106, 0.1), transparent 28rem),
     radial-gradient(circle at 82% 8%, rgba(34, 211, 238, 0.1), transparent 24rem),
-    linear-gradient(180deg, #071013 0%, #050809 46%, #030506 100%);
+    linear-gradient(180deg, var(--bg-page-2) 0%, var(--bg-page) 46%, #030506 100%);
 }
 
-body::before {
+.initly-shell::before {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
   content: "";
   background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    linear-gradient(color-mix(in srgb, var(--text), transparent 97%) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--text), transparent 97%) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: linear-gradient(to bottom, black, transparent 85%);
 }

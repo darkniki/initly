@@ -2,9 +2,14 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import AppBuilder from '../components/AppBuilder.vue';
 import apps from '../data/apps.json';
-import type { AppItem } from '../lib/apps';
+import { validateApps } from '../lib/apps';
+import packageJson from '../../package.json';
+
+const appVersion = packageJson.version;
+const repoUrl = 'https://github.com/darkniki/initly';
+const validatedApps = validateApps(apps);
 ---
 
 <MainLayout title="initly.app | Fresh Mac app installer">
-  <AppBuilder apps={apps as AppItem[]} client:load />
+  <AppBuilder apps={validatedApps} appVersion={appVersion} repoUrl={repoUrl} client:load />
 </MainLayout>
