@@ -1,164 +1,341 @@
 [
   {
     "id": "google-chrome",
-    "icon": "🌐",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/google-chrome.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/google-chrome.png"
+    },
     "name": "Chrome",
     "description": "Google's fast web browser",
     "category": "Browsers",
-    "targets": { "homebrew": { "type": "cask", "name": "google-chrome" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "google-chrome"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "firefox",
-    "icon": "🦊",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/firefox.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/firefox.png"
+    },
     "name": "Firefox",
     "description": "Open-source browser from Mozilla",
     "category": "Browsers",
-    "targets": { "homebrew": { "type": "cask", "name": "firefox" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "firefox"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "telegram",
-    "icon": "✈️",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/telegram.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/telegram.png"
+    },
     "name": "Telegram",
     "description": "Fast encrypted messaging app",
     "category": "Communication",
-    "targets": { "homebrew": { "type": "cask", "name": "telegram" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "telegram"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "whatsapp",
-    "icon": "💬",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/whatsapp.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/whatsapp.png"
+    },
     "name": "WhatsApp",
     "description": "Desktop client for WhatsApp",
     "category": "Communication",
-    "targets": { "homebrew": { "type": "cask", "name": "whatsapp" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "whatsapp"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "visual-studio-code",
-    "icon": "🧩",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/visual-studio-code.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/visual-studio-code.png"
+    },
     "name": "VS Code",
     "description": "Code editor by Microsoft",
     "category": "Dev Tools",
-    "targets": { "homebrew": { "type": "cask", "name": "visual-studio-code" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "visual-studio-code"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "git",
-    "icon": "◆",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/git.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/git.png"
+    },
     "name": "Git",
     "description": "Distributed version control",
     "category": "Dev Tools",
-    "targets": { "homebrew": { "type": "formula", "name": "git" } },
+    "targets": {
+      "homebrew": {
+        "type": "formula",
+        "name": "git"
+      }
+    },
     "verifiedSource": "Homebrew Formula"
   },
   {
     "id": "docker",
-    "icon": "🐳",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/docker.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/docker.png"
+    },
     "name": "Docker",
     "description": "Container platform and desktop app",
     "category": "Dev Tools",
-    "targets": { "homebrew": { "type": "cask", "name": "docker" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "docker"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "obsidian",
-    "icon": "🔮",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/obsidian.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/obsidian.png"
+    },
     "name": "Obsidian",
     "description": "Markdown knowledge base",
     "category": "Productivity",
-    "targets": { "homebrew": { "type": "cask", "name": "obsidian" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "obsidian"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "notion",
-    "icon": "▣",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/notion.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/notion.png"
+    },
     "name": "Notion",
     "description": "Workspace for docs and projects",
     "category": "Productivity",
-    "targets": { "homebrew": { "type": "cask", "name": "notion" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "notion"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "figma",
-    "icon": "🎨",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/figma.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/figma.png"
+    },
     "name": "Figma",
     "description": "Collaborative design tool",
     "category": "Productivity",
-    "targets": { "homebrew": { "type": "cask", "name": "figma" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "figma"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "slack",
-    "icon": "※",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/slack.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/slack.png"
+    },
     "name": "Slack",
     "description": "Team communication app",
     "category": "Communication",
-    "targets": { "homebrew": { "type": "cask", "name": "slack" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "slack"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "spotify",
-    "icon": "♫",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/spotify.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/spotify.png"
+    },
     "name": "Spotify",
     "description": "Music streaming desktop app",
     "category": "Productivity",
-    "targets": { "homebrew": { "type": "cask", "name": "spotify" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "spotify"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "rectangle",
-    "icon": "▥",
+    "icon": {
+      "type": "url",
+      "url": "https://raw.githubusercontent.com/rxhanson/Rectangle/main/Rectangle/Assets.xcassets/AppIcon.appiconset/mac512pts2x.png",
+      "source": "Rectangle GitHub app icon asset"
+    },
     "name": "Rectangle",
     "description": "Keyboard window management",
     "category": "Utilities",
-    "targets": { "homebrew": { "type": "cask", "name": "rectangle" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "rectangle"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "keka",
-    "icon": "📦",
+    "icon": {
+      "type": "url",
+      "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/91/19/a3/9119a39e-9d86-d90d-693a-7d719b471ab3/Keka-iOS-Smile-0-0-1x_U007epad-0-0-0-1-0-0-85-220.png/512x512bb.jpg",
+      "source": "Apple Lookup API / Keka App Store artwork"
+    },
     "name": "Keka",
     "description": "File archiver for macOS",
     "category": "Utilities",
-    "targets": { "homebrew": { "type": "cask", "name": "keka" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "keka"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "iterm2",
-    "icon": "$",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/iterm2.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/iterm2.png"
+    },
     "name": "iTerm2",
     "description": "Terminal emulator for macOS",
     "category": "Dev Tools",
-    "targets": { "homebrew": { "type": "cask", "name": "iterm2" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "iterm2"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "postman",
-    "icon": "🚀",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/postman.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/postman.png"
+    },
     "name": "Postman",
     "description": "API development platform",
     "category": "Dev Tools",
-    "targets": { "homebrew": { "type": "cask", "name": "postman" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "postman"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "tableplus",
-    "icon": "🐘",
+    "icon": {
+      "type": "url",
+      "url": "https://tableplus.com/resources/favicons/apple-icon-180x180.png",
+      "source": "TablePlus official website favicon"
+    },
     "name": "TablePlus",
     "description": "Database GUI client",
     "category": "Dev Tools",
-    "targets": { "homebrew": { "type": "cask", "name": "tableplus" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "tableplus"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   },
   {
     "id": "tailscale",
-    "icon": "⠿",
+    "icon": {
+      "type": "url",
+      "url": "/icons/apps/tailscale.webp",
+      "source": "Simple Icons WebP/PNG generated from Simple Icons SVG, self-hosted locally",
+      "fallbackUrl": "/icons/apps/tailscale.png"
+    },
     "name": "Tailscale",
     "description": "Zero-config private network",
     "category": "Utilities",
-    "targets": { "homebrew": { "type": "cask", "name": "tailscale" } },
+    "targets": {
+      "homebrew": {
+        "type": "cask",
+        "name": "tailscale"
+      }
+    },
     "verifiedSource": "Homebrew Cask"
   }
 ]

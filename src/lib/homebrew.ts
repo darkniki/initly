@@ -7,6 +7,10 @@ const escapeDoubleQuoted = (value: string) => value
   .replace(/\$/g, '\\$')
   .replace(/`/g, '\\`');
 
+const escapeBrewfileString = (value: string) => value
+  .replace(/\\/g, '\\\\')
+  .replace(/"/g, '\\"');
+
 export const splitHomebrewTargets = (apps: AppItem[]) => ({
   formulae: apps.filter((app) => app.targets.homebrew.type === 'formula'),
   casks: apps.filter((app) => app.targets.homebrew.type === 'cask'),
@@ -33,7 +37,7 @@ export const generateInstallCommand = (apps: AppItem[]) => {
 
 export const generateBrewfile = (apps: AppItem[]) => apps
   .map((app) => {
-    const name = getHomebrewName(app);
+    const name = escapeBrewfileString(getHomebrewName(app));
     return app.targets.homebrew.type === 'formula' ? `brew "${name}"` : `cask "${name}"`;
   })
   .join('\n');
