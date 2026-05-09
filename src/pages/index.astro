@@ -1,0 +1,10 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import AppBuilder from '../components/AppBuilder.vue';
+import apps from '../data/apps.json';
+import type { AppItem } from '../lib/apps';
+---
+
+<MainLayout title="initly.app | Fresh Mac app installer">
+  <AppBuilder apps={apps as AppItem[]} client:load />
+</MainLayout>

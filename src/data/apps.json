@@ -1,0 +1,164 @@
+[
+  {
+    "id": "google-chrome",
+    "icon": "🌐",
+    "name": "Chrome",
+    "description": "Google's fast web browser",
+    "category": "Browsers",
+    "targets": { "homebrew": { "type": "cask", "name": "google-chrome" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "firefox",
+    "icon": "🦊",
+    "name": "Firefox",
+    "description": "Open-source browser from Mozilla",
+    "category": "Browsers",
+    "targets": { "homebrew": { "type": "cask", "name": "firefox" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "telegram",
+    "icon": "✈️",
+    "name": "Telegram",
+    "description": "Fast encrypted messaging app",
+    "category": "Communication",
+    "targets": { "homebrew": { "type": "cask", "name": "telegram" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "whatsapp",
+    "icon": "💬",
+    "name": "WhatsApp",
+    "description": "Desktop client for WhatsApp",
+    "category": "Communication",
+    "targets": { "homebrew": { "type": "cask", "name": "whatsapp" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "visual-studio-code",
+    "icon": "🧩",
+    "name": "VS Code",
+    "description": "Code editor by Microsoft",
+    "category": "Dev Tools",
+    "targets": { "homebrew": { "type": "cask", "name": "visual-studio-code" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "git",
+    "icon": "◆",
+    "name": "Git",
+    "description": "Distributed version control",
+    "category": "Dev Tools",
+    "targets": { "homebrew": { "type": "formula", "name": "git" } },
+    "verifiedSource": "Homebrew Formula"
+  },
+  {
+    "id": "docker",
+    "icon": "🐳",
+    "name": "Docker",
+    "description": "Container platform and desktop app",
+    "category": "Dev Tools",
+    "targets": { "homebrew": { "type": "cask", "name": "docker" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "obsidian",
+    "icon": "🔮",
+    "name": "Obsidian",
+    "description": "Markdown knowledge base",
+    "category": "Productivity",
+    "targets": { "homebrew": { "type": "cask", "name": "obsidian" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "notion",
+    "icon": "▣",
+    "name": "Notion",
+    "description": "Workspace for docs and projects",
+    "category": "Productivity",
+    "targets": { "homebrew": { "type": "cask", "name": "notion" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "figma",
+    "icon": "🎨",
+    "name": "Figma",
+    "description": "Collaborative design tool",
+    "category": "Productivity",
+    "targets": { "homebrew": { "type": "cask", "name": "figma" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "slack",
+    "icon": "※",
+    "name": "Slack",
+    "description": "Team communication app",
+    "category": "Communication",
+    "targets": { "homebrew": { "type": "cask", "name": "slack" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "spotify",
+    "icon": "♫",
+    "name": "Spotify",
+    "description": "Music streaming desktop app",
+    "category": "Productivity",
+    "targets": { "homebrew": { "type": "cask", "name": "spotify" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "rectangle",
+    "icon": "▥",
+    "name": "Rectangle",
+    "description": "Keyboard window management",
+    "category": "Utilities",
+    "targets": { "homebrew": { "type": "cask", "name": "rectangle" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "keka",
+    "icon": "📦",
+    "name": "Keka",
+    "description": "File archiver for macOS",
+    "category": "Utilities",
+    "targets": { "homebrew": { "type": "cask", "name": "keka" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "iterm2",
+    "icon": "$",
+    "name": "iTerm2",
+    "description": "Terminal emulator for macOS",
+    "category": "Dev Tools",
+    "targets": { "homebrew": { "type": "cask", "name": "iterm2" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "postman",
+    "icon": "🚀",
+    "name": "Postman",
+    "description": "API development platform",
+    "category": "Dev Tools",
+    "targets": { "homebrew": { "type": "cask", "name": "postman" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "tableplus",
+    "icon": "🐘",
+    "name": "TablePlus",
+    "description": "Database GUI client",
+    "category": "Dev Tools",
+    "targets": { "homebrew": { "type": "cask", "name": "tableplus" } },
+    "verifiedSource": "Homebrew Cask"
+  },
+  {
+    "id": "tailscale",
+    "icon": "⠿",
+    "name": "Tailscale",
+    "description": "Zero-config private network",
+    "category": "Utilities",
+    "targets": { "homebrew": { "type": "cask", "name": "tailscale" } },
+    "verifiedSource": "Homebrew Cask"
+  }
+]
