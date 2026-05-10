@@ -10,6 +10,8 @@ initly.app is a static, open-source app picker for fresh macOS setups. It runs e
 - Select GUI apps and CLI tools
 - Generate a Homebrew install command
 - Export a Brewfile or shell script
+- Share a preselected app list with `?apps=chrome,docker,vscode`
+- Generate optional macOS defaults and terminal setup scripts
 - Persist selected apps locally in the browser
 - Validate app catalog data at build time
 

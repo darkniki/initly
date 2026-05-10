@@ -14,6 +14,7 @@ defineEmits<{
   remove: [app: AppItem];
   copyInstallCommand: [];
   copyPreview: [];
+  copyShareUrl: [];
   downloadBrewfile: [];
   downloadScript: [];
 }>();
@@ -84,7 +85,7 @@ defineEmits<{
       Install Selected
     </button>
 
-    <div class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
+    <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
       <button
         type="button"
         class="rounded-md border border-[var(--border)] px-3 py-2 font-mono text-xs text-[var(--text-ink)] transition hover:border-terminal-blue/70 hover:text-terminal-blue disabled:cursor-not-allowed disabled:text-[var(--text-muted)]"
@@ -108,6 +109,14 @@ defineEmits<{
         @click="$emit('downloadScript')"
       >
         Script
+      </button>
+      <button
+        type="button"
+        class="rounded-md border border-[var(--border)] px-3 py-2 font-mono text-xs text-[var(--text-ink)] transition hover:border-terminal-green/70 hover:text-terminal-green disabled:cursor-not-allowed disabled:text-[var(--text-muted)]"
+        :disabled="!selectedApps.length"
+        @click="$emit('copyShareUrl')"
+      >
+        Share
       </button>
     </div>
 

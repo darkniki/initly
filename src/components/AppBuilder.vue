@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue';
 import AppCard from './AppCard.vue';
 import SelectedApps from './SelectedApps.vue';
+import SelectedSetup from './SelectedSetup.vue';
+import SetupOptionCard from './SetupOptionCard.vue';
 import TerminalPreview, { type PreviewMode } from './TerminalPreview.vue';
 import type { AppItem } from '../lib/apps';
 import { categories, getHomebrewName } from '../lib/apps';
@@ -11,6 +13,9 @@ import {
   generateInstallCommand,
   splitHomebrewTargets,
 } from '../lib/homebrew';
+import { generateSetupScript, setupGroups, setupOptions, type SetupCategory, type SetupOption } from '../lib/setup';
+
+type AppView = 'apps' | 'setup';
 
 const props = defineProps<{
   apps: AppItem[];
@@ -18,15 +23,27 @@ const props = defineProps<{
   repoUrl: string;
 }>();
 
+const activeView = ref<AppView>('apps');
 const activeCategory = ref('All');
 const query = ref('');
 const defaultSelectedIds = ['google-chrome', 'telegram', 'visual-studio-code', 'docker'];
+const appShareAliases: Record<string, string[]> = {
+  'google-chrome': ['chrome'],
+  'visual-studio-code': ['vscode', 'vs-code', 'code'],
+  iterm2: ['iterm'],
+};
 const selectedStorageKey = 'initly:selected-apps:v1';
+const selectedSetupStorageKey = 'initly:setup-options:v1';
 const selected = ref<string[]>(defaultSelectedIds);
+const selectedSetupOptionIds = ref<string[]>([]);
 const copied = ref(false);
 const copyError = ref('');
 const previewMode = ref<PreviewMode>('command');
 const searchInput = ref<HTMLInputElement | null>(null);
+const setupPreviewMode = ref<PreviewMode>('script');
+const setupPreviewModes: Array<{ id: PreviewMode; label: string }> = [
+  { id: 'script', label: 'Script' },
+];
 
 const filteredApps = computed(() => {
   const search = query.value.trim().toLowerCase();
@@ -48,10 +65,23 @@ const selectedApps = computed(() => {
   return props.apps.filter((app) => selectedSet.has(app.id));
 });
 
+const setupOptionsByCategory = computed(() => {
+  return setupGroups.reduce<Record<SetupCategory, SetupOption[]>>((groups, group) => {
+    groups[group.id] = setupOptions.filter((option) => option.category === group.id);
+    return groups;
+  }, { macos: [], terminal: [] });
+});
+
+const selectedSetupOptions = computed(() => {
+  const selectedSet = new Set(selectedSetupOptionIds.value);
+  return setupOptions.filter((option) => selectedSet.has(option.id));
+});
+
 const installCommand = computed(() => generateInstallCommand(selectedApps.value));
 const brewfile = computed(() => generateBrewfile(selectedApps.value));
 const installScript = computed(() => generateHomebrewScript(selectedApps.value));
 const homebrewSplit = computed(() => splitHomebrewTargets(selectedApps.value));
+const setupScript = computed(() => generateSetupScript(selectedSetupOptions.value));
 
 const previewContent = computed(() => {
   if (previewMode.value === 'brewfile') {
@@ -65,19 +95,86 @@ const previewContent = computed(() => {
   return installCommand.value;
 });
 
+const getAppSlug = (app: AppItem) => appShareAliases[app.id]?.[0] ?? app.id;
+
+const slugify = (value: string) => value.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+const getShareTokenMap = () => {
+  const tokenMap = new Map<string, string>();
+
+  props.apps.forEach((app) => {
+    const tokens = [
+      app.id,
+      getHomebrewName(app),
+      slugify(app.name),
+      ...(appShareAliases[app.id] ?? []),
+    ];
+
+    tokens.forEach((token) => {
+      if (token) tokenMap.set(token.toLowerCase(), app.id);
+    });
+  });
+
+  return tokenMap;
+};
+
+const getShareSelectedIds = () => {
+  const appParam = new URLSearchParams(window.location.search).get('apps');
+  if (appParam === null) return null;
+
+  const tokenMap = getShareTokenMap();
+  const ids = appParam
+    .split(',')
+    .map((token) => token.trim().toLowerCase())
+    .filter(Boolean)
+    .map((token) => tokenMap.get(token))
+    .filter((id): id is string => Boolean(id));
+
+  return [...new Set(ids)];
+};
+
+const buildShareUrl = () => {
+  const url = new URL(window.location.href);
+  const slugs = selectedApps.value.map(getAppSlug);
+  const appParam = slugs.join(',');
+
+  url.searchParams.delete('apps');
+
+  const remainingParams = url.searchParams.toString();
+  const query = [
+    remainingParams,
+    appParam ? `apps=${appParam}` : '',
+  ].filter(Boolean).join('&');
+
+  return `${url.origin}${url.pathname}${query ? `?${query}` : ''}${url.hash}`;
+};
+
+const syncShareUrl = () => {
+  if (typeof window === 'undefined') return;
+  window.history.replaceState(null, '', buildShareUrl());
+};
+
 const toggleApp = (app: AppItem) => {
   copied.value = false;
   selected.value = selected.value.includes(app.id)
     ? selected.value.filter((id) => id !== app.id)
     : [...selected.value, app.id];
   persistSelected();
+  syncShareUrl();
 };
 
 const isSelected = (app: AppItem) => selected.value.includes(app.id);
 
+const isSetupSelected = (option: SetupOption) => selectedSetupOptionIds.value.includes(option.id);
+
 const getValidSelectedIds = (ids: string[]) => {
   const appIds = new Set(props.apps.map((app) => app.id));
   return ids.filter((id) => appIds.has(id));
+};
+
+const getValidSetupOptionIds = (ids: string[]) => {
+  const optionIds = new Set(setupOptions.map((option) => option.id));
+  return ids.filter((id) => optionIds.has(id));
 };
 
 const persistSelected = () => {
@@ -88,8 +185,24 @@ const persistSelected = () => {
   }
 };
 
+const persistSetupSelected = () => {
+  try {
+    localStorage.setItem(selectedSetupStorageKey, JSON.stringify(selectedSetupOptionIds.value));
+  } catch {
+    // Setup persistence is a convenience; generated commands stay visible without it.
+  }
+};
+
 const loadSelected = () => {
   try {
+    const urlSelectedIds = getShareSelectedIds();
+    if (urlSelectedIds !== null) {
+      selected.value = getValidSelectedIds(urlSelectedIds);
+      persistSelected();
+      syncShareUrl();
+      return;
+    }
+
     const stored = localStorage.getItem(selectedStorageKey);
     if (stored === null) return;
 
@@ -103,11 +216,36 @@ const loadSelected = () => {
   }
 };
 
+const loadSetupSelected = () => {
+  try {
+    const stored = localStorage.getItem(selectedSetupStorageKey);
+    if (stored === null) return;
+
+    const parsed = JSON.parse(stored);
+    if (!Array.isArray(parsed)) return;
+
+    selectedSetupOptionIds.value = getValidSetupOptionIds(parsed.filter((id): id is string => typeof id === 'string'));
+    persistSetupSelected();
+  } catch {
+    selectedSetupOptionIds.value = [];
+  }
+};
+
 const clearSelected = () => {
   copied.value = false;
   copyError.value = '';
   selected.value = [];
   persistSelected();
+  syncShareUrl();
+};
+
+const toggleSetupOption = (option: SetupOption) => {
+  copied.value = false;
+  copyError.value = '';
+  selectedSetupOptionIds.value = selectedSetupOptionIds.value.includes(option.id)
+    ? selectedSetupOptionIds.value.filter((id) => id !== option.id)
+    : [...selectedSetupOptionIds.value, option.id];
+  persistSetupSelected();
 };
 
 const markCopied = () => {
@@ -154,6 +292,16 @@ const copyInstallCommand = async () => {
   await copyWithFallback(installCommand.value);
 };
 
+const copyShareUrl = async () => {
+  if (!selectedApps.value.length) return;
+  await copyWithFallback(buildShareUrl());
+};
+
+const copySetupScript = async () => {
+  if (!selectedSetupOptions.value.length) return;
+  await copyWithFallback(setupScript.value);
+};
+
 const downloadTextFile = (contents: string, filename: string) => {
   const blob = new Blob([`${contents.trimEnd()}\n`], { type: 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
@@ -174,18 +322,25 @@ const downloadScript = () => {
   downloadTextFile(installScript.value, 'initly-install.sh');
 };
 
+const downloadSetupScript = () => {
+  if (!selectedSetupOptions.value.length) return;
+  downloadTextFile(setupScript.value, 'initly-setup.sh');
+};
+
 const handleKeydown = (event: KeyboardEvent) => {
   if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return;
   if (event.metaKey || event.ctrlKey || event.altKey) return;
 
   if (event.key === '/') {
     event.preventDefault();
-    searchInput.value?.focus();
+    activeView.value = 'apps';
+    void nextTick(() => searchInput.value?.focus());
   }
 };
 
 onMounted(() => {
   loadSelected();
+  loadSetupSelected();
   window.addEventListener('keydown', handleKeydown);
 });
 onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
@@ -209,15 +364,47 @@ onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
       <section id="apps" class="min-w-0">
         <div class="mb-7">
           <h1 class="max-w-3xl font-mono text-4xl font-semibold leading-tight text-[var(--text)] sm:text-5xl">
-            Select apps.
-            <br class="hidden sm:block" />
-            Run one command.
+            <template v-if="activeView === 'apps'">
+              Select apps.
+              <br class="hidden sm:block" />
+              Run one command.
+            </template>
+            <template v-else>
+              Tune macOS.
+              <br class="hidden sm:block" />
+              Set up your shell.
+            </template>
           </h1>
           <p class="mt-4 max-w-2xl text-base text-[var(--text-muted)] sm:text-lg">
-            Pick your daily Mac apps and generate a Homebrew install command.
+            <template v-if="activeView === 'apps'">
+              Pick your daily Mac apps and generate a Homebrew install command.
+            </template>
+            <template v-else>
+              Pick common defaults and terminal tools. Review every command before running it.
+            </template>
           </p>
+
+          <div class="mt-6 inline-grid grid-cols-2 rounded-lg border border-[var(--border)] bg-[var(--panel-soft)] p-1">
+            <button
+              type="button"
+              class="rounded-md px-5 py-2.5 font-mono text-sm transition"
+              :class="activeView === 'apps' ? 'bg-terminal-green/15 text-terminal-green shadow-[0_0_18px_rgba(72,255,106,0.16)]' : 'text-[var(--text-muted)] hover:text-terminal-blue'"
+              @click="activeView = 'apps'"
+            >
+              Apps
+            </button>
+            <button
+              type="button"
+              class="rounded-md px-5 py-2.5 font-mono text-sm transition"
+              :class="activeView === 'setup' ? 'bg-terminal-green/15 text-terminal-green shadow-[0_0_18px_rgba(72,255,106,0.16)]' : 'text-[var(--text-muted)] hover:text-terminal-blue'"
+              @click="activeView = 'setup'"
+            >
+              Setup
+            </button>
+          </div>
         </div>
 
+        <template v-if="activeView === 'apps'">
         <label class="relative block max-w-3xl">
           <span class="sr-only">Search apps</span>
           <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 font-mono text-lg leading-none text-[var(--text-muted)]">⌕</span>
@@ -267,29 +454,79 @@ onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
         <p v-if="!filteredApps.length" class="mt-8 rounded-lg border border-[var(--border)] bg-[var(--panel-soft)] p-8 text-center font-mono text-[var(--text-muted)]">
           No apps found.
         </p>
+        </template>
+
+        <template v-else>
+          <div class="space-y-8">
+            <section
+              v-for="group in setupGroups"
+              :key="group.id"
+            >
+              <div class="mb-4">
+                <h2 class="font-mono text-sm font-semibold uppercase tracking-normal text-terminal-green">
+                  {{ group.title }}
+                </h2>
+                <p class="mt-1 max-w-2xl text-sm text-[var(--text-muted)]">
+                  {{ group.description }}
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <SetupOptionCard
+                  v-for="option in setupOptionsByCategory[group.id]"
+                  :key="option.id"
+                  :option="option"
+                  :selected="isSetupSelected(option)"
+                  @toggle="toggleSetupOption"
+                />
+              </div>
+            </section>
+          </div>
+        </template>
       </section>
 
       <section id="config" class="space-y-4 lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] lg:self-start lg:overflow-y-auto lg:pr-1">
-        <SelectedApps
-          :selected-apps="selectedApps"
-          :install-command="installCommand"
-          :formula-count="homebrewSplit.formulae.length"
-          :cask-count="homebrewSplit.casks.length"
-          trust-text="Everything will be installed via Homebrew."
-          @remove="toggleApp"
-          @copy-install-command="copyInstallCommand"
-          @copy-preview="copyPreview"
-          @download-brewfile="downloadBrewfile"
-          @download-script="downloadScript"
-        />
+        <template v-if="activeView === 'apps'">
+          <SelectedApps
+            :selected-apps="selectedApps"
+            :install-command="installCommand"
+            :formula-count="homebrewSplit.formulae.length"
+            :cask-count="homebrewSplit.casks.length"
+            trust-text="Everything will be installed via Homebrew."
+            @remove="toggleApp"
+            @copy-install-command="copyInstallCommand"
+            @copy-preview="copyPreview"
+            @copy-share-url="copyShareUrl"
+            @download-brewfile="downloadBrewfile"
+            @download-script="downloadScript"
+          />
 
-        <TerminalPreview
-          :content="previewContent"
-          :copied="copied"
-          :mode="previewMode"
-          @mode-change="previewMode = $event"
-          @copy="copyPreview"
-        />
+          <TerminalPreview
+            :content="previewContent"
+            :copied="copied"
+            :mode="previewMode"
+            @mode-change="previewMode = $event"
+            @copy="copyPreview"
+          />
+        </template>
+
+        <template v-else>
+          <SelectedSetup
+            :selected-options="selectedSetupOptions"
+            @remove="toggleSetupOption"
+            @copy-setup-script="copySetupScript"
+            @download-setup-script="downloadSetupScript"
+          />
+
+          <TerminalPreview
+            :content="setupScript"
+            :copied="copied"
+            :mode="setupPreviewMode"
+            :modes="setupPreviewModes"
+            @mode-change="setupPreviewMode = $event"
+            @copy="copySetupScript"
+          />
+        </template>
 
         <p v-if="copyError" class="rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 font-mono text-xs text-red-200">
           {{ copyError }}

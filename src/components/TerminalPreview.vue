@@ -1,22 +1,27 @@
 <script setup lang="ts">
 export type PreviewMode = 'command' | 'brewfile' | 'script';
 
-defineProps<{
+const props = withDefaults(defineProps<{
   content: string;
   copied: boolean;
   mode: PreviewMode;
-}>();
+  modes?: Array<{ id: PreviewMode; label: string }>;
+}>(), {
+  modes: undefined,
+});
 
 defineEmits<{
   modeChange: [mode: PreviewMode];
   copy: [];
 }>();
 
-const modes: Array<{ id: PreviewMode; label: string }> = [
+const defaultModes: Array<{ id: PreviewMode; label: string }> = [
   { id: 'command', label: 'Command' },
   { id: 'brewfile', label: 'Brewfile' },
   { id: 'script', label: 'Script' },
 ];
+
+const visibleModes = props.modes ?? defaultModes;
 </script>
 
 <template>
@@ -32,9 +37,12 @@ const modes: Array<{ id: PreviewMode; label: string }> = [
         </span>
       </div>
 
-      <div class="grid grid-cols-3 rounded-md border border-[var(--border)] bg-[var(--panel-soft)] p-1">
+      <div
+        v-if="visibleModes.length > 1"
+        class="grid grid-cols-3 rounded-md border border-[var(--border)] bg-[var(--panel-soft)] p-1"
+      >
         <button
-          v-for="item in modes"
+          v-for="item in visibleModes"
           :key="item.id"
           type="button"
           class="rounded px-3 py-1.5 font-mono text-xs transition"
