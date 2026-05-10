@@ -9,13 +9,13 @@ export default {
       },
       colors: {
         terminal: {
-          base: 'var(--bg-page)',
-          panel: 'var(--panel)',
-          line: 'var(--border)',
-          green: 'var(--accent-green)',
-          blue: 'var(--accent-blue)',
-          ink: 'var(--text-ink)',
-          muted: 'var(--text-muted)',
+          base: 'rgb(var(--bg-page-rgb) / <alpha-value>)',
+          panel: 'rgb(var(--panel-rgb) / <alpha-value>)',
+          line: 'rgb(var(--border-rgb) / <alpha-value>)',
+          green: 'rgb(var(--accent-green-rgb) / <alpha-value>)',
+          blue: 'rgb(var(--accent-blue-rgb) / <alpha-value>)',
+          ink: 'rgb(var(--text-ink-rgb) / <alpha-value>)',
+          muted: 'rgb(var(--text-muted-rgb) / <alpha-value>)',
         },
       },
       boxShadow: {

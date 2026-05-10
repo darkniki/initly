@@ -20,7 +20,9 @@ const props = defineProps<{
 
 const activeCategory = ref('All');
 const query = ref('');
-const selected = ref<string[]>(['google-chrome', 'telegram', 'visual-studio-code', 'docker']);
+const defaultSelectedIds = ['google-chrome', 'telegram', 'visual-studio-code', 'docker'];
+const selectedStorageKey = 'initly:selected-apps:v1';
+const selected = ref<string[]>(defaultSelectedIds);
 const copied = ref(false);
 const copyError = ref('');
 const previewMode = ref<PreviewMode>('command');
@@ -68,14 +70,44 @@ const toggleApp = (app: AppItem) => {
   selected.value = selected.value.includes(app.id)
     ? selected.value.filter((id) => id !== app.id)
     : [...selected.value, app.id];
+  persistSelected();
 };
 
 const isSelected = (app: AppItem) => selected.value.includes(app.id);
+
+const getValidSelectedIds = (ids: string[]) => {
+  const appIds = new Set(props.apps.map((app) => app.id));
+  return ids.filter((id) => appIds.has(id));
+};
+
+const persistSelected = () => {
+  try {
+    localStorage.setItem(selectedStorageKey, JSON.stringify(selected.value));
+  } catch {
+    // Selection persistence is a convenience; the app keeps working without it.
+  }
+};
+
+const loadSelected = () => {
+  try {
+    const stored = localStorage.getItem(selectedStorageKey);
+    if (stored === null) return;
+
+    const parsed = JSON.parse(stored);
+    if (!Array.isArray(parsed)) return;
+
+    selected.value = getValidSelectedIds(parsed.filter((id): id is string => typeof id === 'string'));
+    persistSelected();
+  } catch {
+    selected.value = defaultSelectedIds;
+  }
+};
 
 const clearSelected = () => {
   copied.value = false;
   copyError.value = '';
   selected.value = [];
+  persistSelected();
 };
 
 const markCopied = () => {
@@ -153,6 +185,7 @@ const handleKeydown = (event: KeyboardEvent) => {
 };
 
 onMounted(() => {
+  loadSelected();
   window.addEventListener('keydown', handleKeydown);
 });
 onUnmounted(() => window.removeEventListener('keydown', handleKeydown));

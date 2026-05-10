@@ -4,20 +4,27 @@
 
 :root {
   --accent-blue: #22d3ee;
+  --accent-blue-rgb: 34 211 238;
   --accent-green: #48ff6a;
+  --accent-green-rgb: 72 255 106;
   --bg-page: #050809;
+  --bg-page-rgb: 5 8 9;
   --bg-page-2: #071013;
   --border: rgba(255, 255, 255, 0.1);
+  --border-rgb: 255 255 255;
   --border-strong: rgba(72, 255, 106, 0.62);
   --header-bg: rgba(0, 0, 0, 0.3);
   --panel: rgba(0, 0, 0, 0.35);
+  --panel-rgb: 0 0 0;
   --panel-soft: rgba(255, 255, 255, 0.025);
   --panel-hover: rgba(34, 211, 238, 0.055);
   --selected: rgba(72, 255, 106, 0.075);
   --terminal-bg: #030607;
   --text: #ffffff;
   --text-ink: #e7fff0;
+  --text-ink-rgb: 231 255 240;
   --text-muted: #8b9b9e;
+  --text-muted-rgb: 139 155 158;
   --shadow-green: 0 0 35px rgba(72, 255, 106, 0.18);
   --shadow-blue: 0 0 28px rgba(34, 211, 238, 0.16);
   color-scheme: dark;

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">initly.app - Mac app installer for Homebrew</title>
+  <desc id="desc">Dark terminal-style preview of the initly.app Mac app selector.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#071013"/>
+      <stop offset="0.55" stop-color="#050809"/>
+      <stop offset="1" stop-color="#030506"/>
+    </linearGradient>
+    <radialGradient id="greenGlow" cx="0.2" cy="0.28" r="0.55">
+      <stop offset="0" stop-color="#48ff6a" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#48ff6a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blueGlow" cx="0.82" cy="0.15" r="0.5">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+      <path d="M44 0H0V44" fill="none" stroke="#ffffff" stroke-opacity="0.045"/>
+    </pattern>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#greenGlow)"/>
+  <rect width="1200" height="630" fill="url(#blueGlow)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <text x="72" y="104" fill="#48ff6a" font-family="'JetBrains Mono', 'SFMono-Regular', Consolas, monospace" font-size="42" font-weight="700">&gt;_ initly.app</text>
+  <text x="72" y="238" fill="#ffffff" font-family="'JetBrains Mono', 'SFMono-Regular', Consolas, monospace" font-size="66" font-weight="700">Select apps.</text>
+  <text x="72" y="318" fill="#ffffff" font-family="'JetBrains Mono', 'SFMono-Regular', Consolas, monospace" font-size="66" font-weight="700">Run one command.</text>
+  <text x="76" y="382" fill="#8b9b9e" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="26">Generate one Homebrew command for a fresh Mac.</text>
+  <g transform="translate(790 132)">
+    <rect width="340" height="355" rx="18" fill="#000000" fill-opacity="0.42" stroke="#ffffff" stroke-opacity="0.12"/>
+    <text x="28" y="52" fill="#48ff6a" font-family="'JetBrains Mono', 'SFMono-Regular', Consolas, monospace" font-size="20" font-weight="700">SELECTED APPS</text>
+    <circle cx="198" cy="45" r="5" fill="#48ff6a"/>
+    <g fill="#ffffff" font-family="'JetBrains Mono', 'SFMono-Regular', Consolas, monospace" font-size="20" font-weight="600">
+      <text x="70" y="105">Chrome</text>
+      <text x="70" y="160">Telegram</text>
+      <text x="70" y="215">VS Code</text>
+      <text x="70" y="270">Docker</text>
+    </g>
+    <g fill="#22d3ee" filter="url(#glow)">
+      <rect x="30" y="82" width="28" height="28" rx="7"/>
+      <rect x="30" y="137" width="28" height="28" rx="7"/>
+      <rect x="30" y="192" width="28" height="28" rx="7"/>
+      <rect x="30" y="247" width="28" height="28" rx="7"/>
+    </g>
+    <rect x="28" y="306" width="284" height="1" fill="#ffffff" fill-opacity="0.1"/>
+  </g>
+  <g transform="translate(72 462)">
+    <rect width="480" height="72" rx="14" fill="#48ff6a" fill-opacity="0.1" stroke="#48ff6a" stroke-opacity="0.85"/>
+    <text x="54" y="47" fill="#48ff6a" font-family="'JetBrains Mono', 'SFMono-Regular', Consolas, monospace" font-size="28" font-weight="700">&gt;_ brew install --cask</text>
+  </g>
+</svg>

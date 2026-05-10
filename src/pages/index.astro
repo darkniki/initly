@@ -10,6 +10,9 @@ const repoUrl = 'https://github.com/darkniki/initly';
 const validatedApps = validateApps(apps);
 ---
 
-<MainLayout title="initly.app | Fresh Mac app installer">
+<MainLayout
+  title="initly.app - Mac app installer for Homebrew"
+  description="Select your Mac apps and generate one Homebrew install command for a fresh setup."
+>
   <AppBuilder apps={validatedApps} appVersion={appVersion} repoUrl={repoUrl} client:load />
 </MainLayout>
