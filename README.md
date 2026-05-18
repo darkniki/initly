@@ -4,6 +4,8 @@ Select the Mac apps you use every day and generate one Homebrew install command.
 
 initly.app is a static, open-source app picker for fresh macOS setups. It runs entirely in the browser: no backend, no analytics, and no hidden installs.
 
+![initly.app interface showing selected Mac apps and generated Homebrew commands](docs/readme-screenshot.png)
+
 ## Features
 
 - Search and filter common Mac apps
